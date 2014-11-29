@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace fpjarmul
 {
@@ -47,14 +49,24 @@ namespace fpjarmul
             return img;
         }
 
-        public List<byte> secretDataToByte(SecretData data)
+        public byte[] secretDataToByte(SecretData data)
         {
-            return null;
+            if (data == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, data);
+            return ms.ToArray();
         }
 
-        public SecretData byteToSecretData(List<Byte> data)
+        public SecretData byteToSecretData(byte[] array)
         {
-            return null;
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(array, 0, array.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            SecretData data = (SecretData)binForm.Deserialize(memStream);
+            return data;
         }
     }
 }
