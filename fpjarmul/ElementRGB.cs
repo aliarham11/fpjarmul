@@ -8,10 +8,12 @@ namespace fpjarmul
 {
     class ElementRGB
     {
-        List<int> Red { get; set; }
-        List<int> Green { get; set; }
-        List<int> Blue { get; set; }
-        int StegoLength { get; set; }
+        public List<int> Red { get; set; }
+        public List<int> Green { get; set; }
+        public List<int> Blue { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+        public int StegoLength { get; set; }
         
     }
 }
