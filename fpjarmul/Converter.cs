@@ -100,5 +100,91 @@ namespace fpjarmul
 
             return bytes;
         }
+
+        public static int[] BinaryToNumeric(BitArray bits)
+        {
+            int[] data = new int[bits.Count];
+            for (int i = 0; i < bits.Count; i++)
+            {
+                if (bits[i])
+                {
+                    data[i] = 1;
+                }
+                else
+                {
+                    data[i] = 0;
+                }
+            }
+
+            return data;
+        }
+
+        public static BitArray NumericToBinary(int[] data)
+        {
+            BitArray bits = new BitArray(data.Length);
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i]==1)
+                {
+                    bits.Set(i,true);
+                }
+                else
+                {
+                    bits.Set(i, false);
+                }
+            }
+
+            return bits;
+        }
+
+        public static int[] base2ToBase3(int[] base2Array)
+        {
+            int[] base3Array = new int[base2Array.Length];
+            for (int i = 0; i < base2Array.Length - 1; i += 2)
+            {
+                if (base2Array[i] == 1 && base2Array[i + 1] == 0)
+                {
+                    base3Array[i] = 0;
+                    base3Array[i + 1] = 2;
+                }
+                else if (base2Array[i] == 1 && base2Array[i + 1] == 1)
+                {
+                    base3Array[i] = 1;
+                    base3Array[i + 1] = 0;
+                }
+                else
+                {
+                    base3Array[i] = base2Array[i];
+                    base3Array[i + 1] = base2Array[i+1];
+                }
+            }
+
+            return base3Array;
+        }
+
+        public static int[] base3ToBase2(int[] base3Array)
+        {
+            int[] base2Array = new int[base3Array.Length];
+            for (int i = 0; i < base3Array.Length - 1; i += 2)
+            {
+                if (base3Array[i] == 0 && base3Array[i + 1] == 2)
+                {
+                    base2Array[i] = 1;
+                    base2Array[i + 1] = 0;
+                }
+                else if (base3Array[i] == 1 && base3Array[i + 1] == 0)
+                {
+                    base2Array[i] = 1;
+                    base2Array[i + 1] = 1;
+                }
+                else
+                {
+                    base2Array[i] = base3Array[i];
+                    base2Array[i + 1] = base3Array[i + 1];
+                }
+            }
+
+            return base2Array;
+        }
     }
 }
