@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Collections;
 
 namespace fpjarmul
 {
-    class Converter
+    static class Converter
     {
-        public ElementRGB imageToElementRGB(Image img)
+        public static ElementRGB imageToElementRGB(Image img)
         {
             ElementRGB raw = new ElementRGB();
             Bitmap inputImage = new Bitmap(img);
@@ -31,7 +32,7 @@ namespace fpjarmul
             return raw;
         }
 
-        public Image elementRGBToImage(ElementRGB data)
+        public static Image elementRGBToImage(ElementRGB data)
         {
             Bitmap img = new Bitmap(data.width, data.height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
@@ -49,7 +50,7 @@ namespace fpjarmul
             return img;
         }
 
-        public byte[] secretDataToByte(SecretData data)
+        public static byte[] secretDataToByte(SecretData data)
         {
             if (data == null)
                 return null;
@@ -59,7 +60,7 @@ namespace fpjarmul
             return ms.ToArray();
         }
 
-        public SecretData byteToSecretData(byte[] array)
+        public static SecretData byteToSecretData(byte[] array)
         {
             MemoryStream memStream = new MemoryStream();
             BinaryFormatter binForm = new BinaryFormatter();
@@ -67,6 +68,37 @@ namespace fpjarmul
             memStream.Seek(0, SeekOrigin.Begin);
             SecretData data = (SecretData)binForm.Deserialize(memStream);
             return data;
+        }
+
+        public static BitArray ToBitArray(byte[] bytes)
+        {
+            var bits = new BitArray(bytes);
+
+            return bits;
+        }
+
+        public static byte[] ToByteArray(this BitArray bits)
+        {
+            int numBytes = bits.Count / 8;
+            if (bits.Count % 8 != 0) numBytes++;
+
+            byte[] bytes = new byte[numBytes];
+            int byteIndex = 0, bitIndex = 0;
+
+            for (int i = 0; i < bits.Count; i++)
+            {
+                if (bits[i])
+                    bytes[byteIndex] |= (byte)(1 << (7 - bitIndex));
+
+                bitIndex++;
+                if (bitIndex == 8)
+                {
+                    bitIndex = 0;
+                    byteIndex++;
+                }
+            }
+
+            return bytes;
         }
     }
 }
