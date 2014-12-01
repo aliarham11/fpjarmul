@@ -13,16 +13,24 @@ namespace fpjarmul
         public Image CreateStegoImage(ElementRGB rawData, byte[] secretData)
         {
             Bitmap StegoImage = new Bitmap(rawData.width, rawData.height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            BitArray secretBits = new BitArray(secretData);
+            
+            BitArray secretBits = Converter.ToBitArray(secretData);
+            int[] numericBits = Converter.BinaryToNumeric(secretBits);
+            int[] base3Data = Converter.base2ToBase3(numericBits);
 
             //Operasi Steganography di sini
 
-            int i = 0;
+            int[] embededData = new int[base3Data.Length + 1];
+            for (int i = 0; i < base3Data.Length; i++)
+                embededData[i] = base3Data[i];
+            embededData[base3Data.Length] = 0;
+
+            int index = 0;
             for (int x = 0; x < rawData.width; x++)
             {
                 for (int y = 0; y < rawData.height; y++)
                 {
-                    i++;
+                    index++;
 
                     //Manipulasi Pixel//////////
 
@@ -30,7 +38,7 @@ namespace fpjarmul
 
                     ////////////////////////////
 
-                    Color imageColor = Color.FromArgb(rawData.Red.ElementAt(i), rawData.Green.ElementAt(i), rawData.Blue.ElementAt(i));
+                    Color imageColor = Color.FromArgb(rawData.Red.ElementAt(index), rawData.Green.ElementAt(index), rawData.Blue.ElementAt(index));
                     StegoImage.SetPixel(x, y, imageColor);
                 }
             }
