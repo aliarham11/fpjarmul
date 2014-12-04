@@ -12,9 +12,11 @@ namespace fpjarmul
 {
     public partial class Form1 : Form
     {
+        int stegoLength=0;
         public Form1()
         {
             InitializeComponent();
+            int MAXFILESIZE = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
