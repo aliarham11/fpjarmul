@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace fpjarmul
 {
@@ -16,16 +17,22 @@ namespace fpjarmul
         {
             ElementRGB raw = new ElementRGB();
             Bitmap inputImage = new Bitmap(img);
+            Color pixelColor = new Color();
             raw.width = inputImage.Width;
             raw.height = inputImage.Height;
+
+            raw.Red = new List<int>();
+            raw.Green = new List<int>();
+            raw.Blue = new List<int>();
+
             for (int x = 0; x < inputImage.Width; x++)
             {
                 for (int y = 0; y < inputImage.Height; y++)
                 {
-                    Color pixelColor = inputImage.GetPixel(x, y);
-                    raw.Red.Add(pixelColor.R);
-                    raw.Green.Add(pixelColor.G);
-                    raw.Blue.Add(pixelColor.B);
+                    pixelColor = inputImage.GetPixel(x, y);
+                    raw.Red.Add(int.Parse(pixelColor.R.ToString()));
+                    raw.Green.Add(int.Parse(pixelColor.G.ToString()));
+                    raw.Blue.Add(int.Parse(pixelColor.B.ToString()));
                 }
             }
 
@@ -41,9 +48,9 @@ namespace fpjarmul
             {
                 for (int y = 0; y < data.height; y++)
                 {
-                    i++;
                     Color imageColor = Color.FromArgb(data.Red.ElementAt(i), data.Green.ElementAt(i), data.Blue.ElementAt(i));
                     img.SetPixel(x, y, imageColor);
+                    i++;
                 }
             }
 

@@ -9,7 +9,7 @@ namespace fpjarmul
     [Serializable]
     class SecretData
     {
-        String SecretText { get; set; }
-        Image SecretImage { get; set; }
+        public String SecretText { get; set; }
+        public Image SecretImage { get; set; }
     }
 }
