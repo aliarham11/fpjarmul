@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace fpjarmul
 {
     static class Steganography
     {
+        static int[] temp;
         public static Image CreateStegoImage(ElementRGB rawData, byte[] secretData, Bitmap carrierImage)
         {
             Bitmap StegoImage = carrierImage;
@@ -20,23 +22,30 @@ namespace fpjarmul
 
             //Operasi Steganography di sini
 
+            temp = new int[base3Data.Length + 1];
             int[] embededData = new int[base3Data.Length + 1];
             for (int i = 0; i < base3Data.Length; i++)
+            {
                 embededData[i] = base3Data[i];
+                temp[i] = base3Data[i];
+            }
             embededData[base3Data.Length] = 0;
 
             int index = 0;
             int ptr = 0;
             int f1,f2,f3;
 
+            
             for (int x = 0; x < rawData.width; x++)
             {
                 for (int y = 0; y < rawData.height; y++)
                 {
 
-                    if (ptr <= base3Data.Length)
+                    if (ptr+2 <= base3Data.Length)
                     {
                         //Manipulasi Pixel//////////
+
+                        //MessageBox.Show(rawData.Red.ElementAt(index) + " " + rawData.Green.ElementAt(index) + " " + rawData.Blue.ElementAt(index));
 
                         f1 = rawData.Red.ElementAt(index) % 3;
                         f2 = rawData.Green.ElementAt(index) % 3;
@@ -44,63 +53,44 @@ namespace fpjarmul
 
 
                         ///////////////////////////////////////////////////////////////////////////////
-                        if (ptr <= base3Data.Length && f1 == embededData.ElementAt(ptr))
+                        if (f1 == embededData.ElementAt(ptr))
                         {
                             rawData.Red[index] = rawData.Red.ElementAt(index);
                         }
-                        else if (ptr <= base3Data.Length && f1 != embededData.ElementAt(ptr))
+                        else
                         {
-                            if (f1 < embededData.ElementAt(ptr))
-                            {
-                                rawData.Red[index] = rawData.Red.ElementAt(index) - 1;
-                            }
-                            else if (f1 > embededData.ElementAt(ptr))
-                            {
-                                rawData.Red[index] = rawData.Red.ElementAt(index) + 1;
-                            }
+                            rawData.Red[index] = rawData.Red.ElementAt(index)+embededData.ElementAt(ptr)-f1;
                         }
                         /////////////////////////////////////////////////////////////////////////////////
                         /////////////////////////////////////////////////////////////////////////////////
-                        if (ptr + 1 <= base3Data.Length && f2 == embededData.ElementAt(ptr + 1))
+                        if (f2 == embededData.ElementAt(ptr + 1))
                         {
                             rawData.Green[index] = rawData.Green.ElementAt(index);
                         }
-                        else if (ptr + 1 <= base3Data.Length && f2 != embededData.ElementAt(ptr + 1))
+                        else
                         {
-                            if (f2 < embededData.ElementAt(ptr + 1))
-                            {
-                                rawData.Green[index] = rawData.Green.ElementAt(index) - 1;
-                            }
-                            else if (f2 > embededData.ElementAt(ptr + 1))
-                            {
-                                rawData.Green[index] = rawData.Green.ElementAt(index) + 1;
-                            }
+                            rawData.Green[index] = rawData.Green.ElementAt(index)+embededData.ElementAt(ptr+1)-f2;
                         }
                         /////////////////////////////////////////////////////////////////////////////////
                         /////////////////////////////////////////////////////////////////////////////////
-                        if (ptr + 2 <= base3Data.Length && f3 == embededData.ElementAt(ptr + 2))
+                        if (f3 == embededData.ElementAt(ptr + 2))
                         {
                             rawData.Blue[index] = rawData.Blue.ElementAt(index);
                         }
-                        else if (ptr + 2 <= base3Data.Length && f3 != embededData.ElementAt(ptr + 2))
+                        else
                         {
-                            if (f3 < embededData.ElementAt(ptr + 2))
-                            {
-                                rawData.Blue[index] = rawData.Blue.ElementAt(index) - 1;
-                            }
-                            else if (f3 > embededData.ElementAt(ptr + 2))
-                            {
-                                rawData.Blue[index] = rawData.Blue.ElementAt(index) + 1;
-                            }
+                            rawData.Blue[index] = rawData.Blue.ElementAt(index)+embededData.ElementAt(ptr+2)-f3;
                         }
                         /////////////////////////////////////////////////////////////////////////////////
+
+                        //MessageBox.Show(f1+" "+embededData.ElementAt(ptr)+" "+f2+" "+embededData.ElementAt(ptr+1)+" "+f3+" "+embededData.ElementAt(ptr+2)+"\n"+rawData.Red.ElementAt(index)+" "+rawData.Green.ElementAt(index)+" "+rawData.Blue.ElementAt(index));
 
                         ptr += 3;
 
                         ////////////////////////////
 
                         Color imageColor;
-                        if (rawData.Blue.ElementAt(index) != -1 && rawData.Red.ElementAt(index)!= -1 && rawData.Green.ElementAt(index)!=-1)
+                        //if (rawData.Blue.ElementAt(index) != -1 && rawData.Red.ElementAt(index)!= -1 && rawData.Green.ElementAt(index)!=-1)
                         {
                             imageColor = Color.FromArgb(rawData.Red.ElementAt(index), rawData.Green.ElementAt(index), rawData.Blue.ElementAt(index));
                             StegoImage.SetPixel(x, y, imageColor);
@@ -110,7 +100,7 @@ namespace fpjarmul
                     }
                 }
             }
-
+            rawData.StegoLength = index;
             
             return StegoImage;
         }
@@ -121,7 +111,6 @@ namespace fpjarmul
             List<int> embededData = new List<int>();
             int s1, s2, s3;
             ElementRGB rgbData = Converter.imageToElementRGB(StegoImage);
-
             for (int i = 0; i < stegoLength; i++)
             {
                 s1 = rgbData.Red.ElementAt(i) % 3;
@@ -133,12 +122,14 @@ namespace fpjarmul
                 embededData.Add(s3);
             }
 
-            while ((embededData.Count % 8) != 0)
-                embededData.RemoveAt(embededData.Count - 1);
+            //while ((embededData.Count % 8) != 0)
+            embededData.RemoveAt(embededData.Count - 1);
 
             int[] base3Data = new int[embededData.Count];
             for (int i = 0; i < embededData.Count; i++)
+            {
                 base3Data[i] = embededData.ElementAt(i);
+            }
 
             int[] base2Data = Converter.base3ToBase2(base3Data);
             BitArray binaryData = Converter.NumericToBinary(base2Data);

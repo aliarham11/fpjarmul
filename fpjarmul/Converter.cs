@@ -30,9 +30,21 @@ namespace fpjarmul
                 for (int y = 0; y < inputImage.Height; y++)
                 {
                     pixelColor = inputImage.GetPixel(x, y);
-                    raw.Red.Add(int.Parse(pixelColor.R.ToString()));
-                    raw.Green.Add(int.Parse(pixelColor.G.ToString()));
-                    raw.Blue.Add(int.Parse(pixelColor.B.ToString()));
+
+                    if (int.Parse(pixelColor.R.ToString()) != 0)
+                        raw.Red.Add(int.Parse(pixelColor.R.ToString()));
+                    else
+                        raw.Red.Add(1);
+
+                    if (int.Parse(pixelColor.G.ToString()) != 0)
+                        raw.Green.Add(int.Parse(pixelColor.G.ToString()));
+                    else
+                        raw.Green.Add(1);
+
+                    if (int.Parse(pixelColor.B.ToString()) != 0)
+                        raw.Blue.Add(int.Parse(pixelColor.B.ToString()));
+                    else
+                        raw.Blue.Add(1);
                 }
             }
 
@@ -64,15 +76,20 @@ namespace fpjarmul
             BinaryFormatter bf = new BinaryFormatter();
             MemoryStream ms = new MemoryStream();
             bf.Serialize(ms, data);
-            return ms.ToArray();
+            ms.Seek(0, 0);
+            StreamReader rdr = new StreamReader(ms);
+            string str = rdr.ReadToEnd();
+            byte[] byteArray = Encoding.ASCII.GetBytes(str);
+
+            return byteArray;
         }
 
         public static SecretData byteToSecretData(byte[] array)
         {
-            MemoryStream memStream = new MemoryStream();
+            MemoryStream memStream = new MemoryStream(array);
             BinaryFormatter binForm = new BinaryFormatter();
-            memStream.Write(array, 0, array.Length);
-            memStream.Seek(0, SeekOrigin.Begin);
+            //memStream.Write(array, 0, array.Length);
+            memStream.Seek(0, 0);
             SecretData data = (SecretData)binForm.Deserialize(memStream);
             return data;
         }
@@ -86,26 +103,30 @@ namespace fpjarmul
 
         public static byte[] ToByteArray(this BitArray bits)
         {
-            int numBytes = bits.Count / 8;
-            if (bits.Count % 8 != 0) numBytes++;
+            //int numBytes = bits.Count / 8;
+            //if (bits.Count % 8 != 0) numBytes++;
 
-            byte[] bytes = new byte[numBytes];
-            int byteIndex = 0, bitIndex = 0;
+            //byte[] bytes = new byte[numBytes];
+            //int byteIndex = 0, bitIndex = 0;
 
-            for (int i = 0; i < bits.Count; i++)
-            {
-                if (bits[i])
-                    bytes[byteIndex] |= (byte)(1 << (7 - bitIndex));
+            //for (int i = 0; i < bits.Count; i++)
+            //{
+            //    if (bits[i])
+            //        bytes[byteIndex] |= (byte)(1 << (7 - bitIndex));
 
-                bitIndex++;
-                if (bitIndex == 8)
-                {
-                    bitIndex = 0;
-                    byteIndex++;
-                }
-            }
+            //    bitIndex++;
+            //    if (bitIndex == 8)
+            //    {
+            //        bitIndex = 0;
+            //        byteIndex++;
+            //    }
+            //}
 
-            return bytes;
+            //return bytes;
+
+            byte[] ret = new byte[(bits.Length - 1) / 8 + 1];
+            bits.CopyTo(ret, 0);
+            return ret;
         }
 
         public static int[] BinaryToNumeric(BitArray bits)

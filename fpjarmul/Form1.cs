@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace fpjarmul
     {
         int stegoLength=0;
         int MAXFILESIZE = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -101,6 +103,8 @@ namespace fpjarmul
             ElementRGB carrier = Converter.imageToElementRGB(pictureBox1.Image);
 
             pictureBox3.Image = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)pictureBox1.Image);
+            stegoLength = carrier.StegoLength;
+
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Refresh();
             btnSendImage.Enabled = true;
@@ -115,9 +119,28 @@ namespace fpjarmul
             ElementRGB carrier = Converter.imageToElementRGB(pictureBox1.Image);
 
             pictureBox3.Image = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)pictureBox1.Image);
+            stegoLength = carrier.StegoLength;
+
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Refresh();
             btnSendImage.Enabled = true;
+        }
+
+        private void btnSendImage_Click(object sender, EventArgs e)
+        {
+            //SecretData data = new SecretData();
+
+            //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
+
+            //if (data.SecretText!=null)
+            //    MessageBox.Show(data.SecretText);
+
+
+
+            //Tambahkan di sini socket programming untuk mengirim pesan ke receiver
+            //data yang dikirim berupa objek Image dan integer stegoLength
+            //Image diperoleh dari pictureBox3.Image
+            //stegoLength diperoleh dari variabel global class ini stegoLength
         }
     }
 }

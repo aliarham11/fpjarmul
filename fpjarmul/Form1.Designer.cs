@@ -180,6 +180,7 @@
             this.btnSendImage.TabIndex = 12;
             this.btnSendImage.Text = "Send Image";
             this.btnSendImage.UseVisualStyleBackColor = true;
+            this.btnSendImage.Click += new System.EventHandler(this.btnSendImage_Click);
             // 
             // LabelSize
             // 
