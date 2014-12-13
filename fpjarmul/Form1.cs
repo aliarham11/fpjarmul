@@ -30,6 +30,7 @@ namespace fpjarmul
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            data = new SecretData();
             //pictureBox3.Image = null;
             //stegoLength = 18;
             
@@ -112,12 +113,12 @@ namespace fpjarmul
 
         private void btnCreateStegoText_Click(object sender, EventArgs e)
         {
-            data = new SecretData();
+            //data = new SecretData();
             data.SecretText = richTextBox1.Text;
 
             byte[] secretByte = Converter.secretDataToByte(data);
             ElementRGB carrier = Converter.imageToElementRGB(pictureBox1.Image);
-
+            Console.WriteLine(secretByte.Length);
             pictureBox3.Image = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)pictureBox1.Image);
             stegoLength = carrier.StegoLength;
 
@@ -128,12 +129,12 @@ namespace fpjarmul
 
         private void btnCreateStegoImage_Click(object sender, EventArgs e)
         {
-            data = new SecretData();
+            //data = new SecretData();
             data.SecretImage = pictureBox2.Image;
 
             byte[] secretByte = Converter.secretDataToByte(data);
             ElementRGB carrier = Converter.imageToElementRGB(pictureBox1.Image);
-
+            Console.WriteLine(secretByte.Length);
             pictureBox3.Image = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)pictureBox1.Image);
             stegoLength = carrier.StegoLength;
 
@@ -145,20 +146,23 @@ namespace fpjarmul
         private void btnSendImage_Click(object sender, EventArgs e)
         {
             BinaryFormatter bformatter = new BinaryFormatter();
-            PacketData packetData = new PacketData(pictureBox3.Image, stegoLength, data);
+            PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
+            packetData.realImage = pictureBox1.Image;
+            packetData.secretImage = data.SecretImage;
+            packetData.secretText = data.SecretText;
 
             clientSocket = new TcpClient();
             Console.WriteLine("Client Started");
-            clientSocket.Connect("10.151.43.68", 5118);
+            clientSocket.Connect("127.0.0.1", 5118);
             NetworkStream serverStream = clientSocket.GetStream();
             bformatter.Serialize(serverStream, packetData);
             Console.WriteLine(pictureBox3.Image.Size);
-            //SecretData data = new SecretData();
+            //SecretData data1 = new SecretData();
 
-            //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
+            //data1 = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
 
             //if (data.SecretText != null)
-            //    MessageBox.Show(data.SecretText);
+            //    MessageBox.Show(data1.SecretText);
 
 
 

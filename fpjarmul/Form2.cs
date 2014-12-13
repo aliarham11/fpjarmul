@@ -42,7 +42,7 @@ namespace fpjarmul
             //data yang diterima dari socket berupa objek Image dan integer stegoLength
             //update nilai pictureBox1.Image dengan buffer image dari socket
             //update nilai stegoLength pada form ini (awalnya 0) dengan stegoLength dari socket
-            
+
             pictureBox1.Image = incomingData.stegoImage;
             stegoLength = incomingData.stegoLength;
             SecretData data = new SecretData();
@@ -52,6 +52,8 @@ namespace fpjarmul
                 MessageBox.Show(data.SecretText);
             else
                 pictureBox2.Image = data.SecretImage;
+
+            serverSocket.Stop();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -66,9 +68,16 @@ namespace fpjarmul
             NetworkStream networkStream = clientSocket.GetStream();
             incomingData = (PacketData)bformatter.Deserialize(networkStream);
             Console.WriteLine(incomingData.stegoLength);
-            Console.WriteLine(incomingData.stegoImage.Size);
+            SecretData a = new SecretData();
+            a.SecretImage = incomingData.secretImage;
+            a.SecretText = incomingData.secretText;
 
-            serverSocket.Stop();
+            byte[] secretByte = Converter.secretDataToByte(a);
+            Console.WriteLine(secretByte.Length);
+            ElementRGB carrier = Converter.imageToElementRGB(incomingData.realImage);
+            temp = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)incomingData.realImage);
+            Console.WriteLine(incomingData.stegoLength);
+            Console.WriteLine(carrier.StegoLength);
             
         }
 

@@ -12,33 +12,37 @@ namespace fpjarmul
     class PacketData : ISerializable
     {
         public Image stegoImage;
+        public Image realImage;
+        public String secretText;
+        public Image secretImage;
         public int stegoLength;
-        public SecretData secretData;
         public PacketData()
         { 
         }
 
-        public PacketData(Image image, int stegoLength, SecretData secretData)
+        public PacketData(Image image, int stegoLength)
         {
             // TODO: Complete member initialization
             this.stegoImage = image;
             this.stegoLength = stegoLength;
-            this.secretData = secretData;
         }
 
         public PacketData(SerializationInfo info, StreamingContext ctxt)
         {
             stegoImage = (Image)info.GetValue("StegoImage",typeof(Image));
+            realImage = (Image)info.GetValue("RealImage", typeof(Image));
+            secretImage = (Image)info.GetValue("SecretImage", typeof(Image));
             stegoLength = (int)info.GetValue("StegoLength",typeof(int));
-            secretData = (SecretData)info.GetValue("SecretData",typeof(SecretData));
- 
+            secretText = (String)info.GetValue("SecretText",typeof(String));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("StegoImage", stegoImage);
             info.AddValue("StegoLength", stegoLength);
-            info.AddValue("SecretData", secretData);
+            info.AddValue("SecretText", secretText);
+            info.AddValue("SecretImage", secretImage);
+            info.AddValue("RealImage", realImage);
         }
     }
 }
