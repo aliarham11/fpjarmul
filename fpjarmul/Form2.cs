@@ -21,6 +21,7 @@ namespace fpjarmul
         TcpListener serverSocket;
         TcpClient clientSocket;
         IPAddress ipaddress;
+        Image temp;
         public Form2()
         {
             InitializeComponent();
@@ -29,6 +30,7 @@ namespace fpjarmul
         private void Form2_Load(object sender, EventArgs e)
         {
             button1.Enabled = false;
+            button3.Enabled = false;
             ipaddress = IPAddress.Parse("127.0.0.1");
             serverSocket = new TcpListener(ipaddress, 5118);
             clientSocket = default(TcpClient);
@@ -37,12 +39,6 @@ namespace fpjarmul
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Tambahi di sini masalah socketing
-            //pictureBox1 image diperoleh dari buffer socket kemudian ditampilkan ke pictureBox
-            //data yang diterima dari socket berupa objek Image dan integer stegoLength
-            //update nilai pictureBox1.Image dengan buffer image dari socket
-            //update nilai stegoLength pada form ini (awalnya 0) dengan stegoLength dari socket
-
             pictureBox1.Image = incomingData.stegoImage;
             stegoLength = incomingData.stegoLength;
             SecretData data = new SecretData();
@@ -59,6 +55,8 @@ namespace fpjarmul
         private void button2_Click(object sender, EventArgs e)
         {
             button1.Enabled = true;
+            button2.Enabled = false;
+            button3.Enabled = true;
             incomingData = null;
             serverSocket.Start();
             Console.WriteLine("Server Started");
@@ -68,17 +66,22 @@ namespace fpjarmul
             NetworkStream networkStream = clientSocket.GetStream();
             incomingData = (PacketData)bformatter.Deserialize(networkStream);
             Console.WriteLine(incomingData.stegoLength);
-            SecretData a = new SecretData();
-            a.SecretImage = incomingData.secretImage;
-            a.SecretText = incomingData.secretText;
+            SecretData tempSecretDt = new SecretData();
+            tempSecretDt.SecretImage = incomingData.secretImage;
+            tempSecretDt.SecretText = incomingData.secretText;
 
-            byte[] secretByte = Converter.secretDataToByte(a);
+            byte[] secretByte = Converter.secretDataToByte(tempSecretDt);
             Console.WriteLine(secretByte.Length);
             ElementRGB carrier = Converter.imageToElementRGB(incomingData.realImage);
             temp = Steganography.CreateStegoImage(carrier, secretByte, (Bitmap)incomingData.realImage);
-            Console.WriteLine(incomingData.stegoLength);
-            Console.WriteLine(carrier.StegoLength);
             
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = true;
+            button3.Enabled = false;
+            serverSocket.Stop();
         }
 
     }
