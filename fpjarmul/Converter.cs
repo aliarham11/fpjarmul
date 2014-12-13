@@ -86,6 +86,7 @@ namespace fpjarmul
 
         public static SecretData byteToSecretData(byte[] array)
         {
+            Console.WriteLine(array.Length);
             MemoryStream memStream = new MemoryStream(array);
             BinaryFormatter binForm = new BinaryFormatter();
             //memStream.Write(array, 0, array.Length);
