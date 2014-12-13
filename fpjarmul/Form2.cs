@@ -18,6 +18,11 @@ namespace fpjarmul
             InitializeComponent();
         }
 
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             //Tambahi di sini masalah socketing
@@ -34,6 +39,8 @@ namespace fpjarmul
             else
                 pictureBox2.Image = data.SecretImage;
         }
+
+        
 
 
 

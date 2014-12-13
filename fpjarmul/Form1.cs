@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Sockets;
+using System.Net;
 
 namespace fpjarmul
 {
@@ -16,12 +18,26 @@ namespace fpjarmul
     {
         int stegoLength=0;
         int MAXFILESIZE = 0;
-
+        TcpClient clientSocket;
+        string msg;
         public Form1()
         {
             InitializeComponent();
         }
 
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            msg = "Assalamualaikum";
+            clientSocket = new TcpClient();
+            Console.WriteLine("Client Started");
+            clientSocket.Connect("10.151.40.235", 5118);
+            NetworkStream serverStream = clientSocket.GetStream();
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(msg);
+            serverStream.Write(outStream,0,outStream.Length);
+            serverStream.Flush();
+
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             // open file dialog
@@ -128,6 +144,7 @@ namespace fpjarmul
 
         private void btnSendImage_Click(object sender, EventArgs e)
         {
+            PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
             //SecretData data = new SecretData();
 
             //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
@@ -142,5 +159,7 @@ namespace fpjarmul
             //Image diperoleh dari pictureBox3.Image
             //stegoLength diperoleh dari variabel global class ini stegoLength
         }
+
+       
     }
 }
