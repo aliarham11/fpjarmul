@@ -13,7 +13,6 @@ namespace fpjarmul
     {
         public Image stegoImage;
         public int stegoLength;
-        private Image image;
         public PacketData()
         { 
         }

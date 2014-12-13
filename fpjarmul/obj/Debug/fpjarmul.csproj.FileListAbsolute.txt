@@ -10,3 +10,12 @@ E:\Riset\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Properties.Resources.resources
 E:\Riset\fpjarmul\fpjarmul\obj\Debug\fpjarmul.csproj.GenerateResource.Cache
 E:\Riset\fpjarmul\fpjarmul\obj\Debug\fpjarmul.exe
 E:\Riset\fpjarmul\fpjarmul\obj\Debug\fpjarmul.pdb
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.exe
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.pdb
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\bin\Debug\fpjarmul.exe
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\bin\Debug\fpjarmul.pdb
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.csprojResolveAssemblyReference.cache
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Form1.resources
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Form2.resources
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Properties.Resources.resources
+E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarmul\fpjarmul\obj\Debug\fpjarmul.csproj.GenerateResource.Cache
