@@ -73,37 +73,37 @@ namespace fpjarmul
         {
             if (data == null)
                 return null;
-            byte[] byteArray = null;
-            if (data.SecretText != "")
-            {
-                Console.WriteLine(data.SecretText);
-                byteArray = Encoding.UTF8.GetBytes(data.SecretText);
+            //byte[] byteArray = null;
+            //if (data.SecretText != "")
+            //{
+            //    Console.WriteLine(data.SecretText);
+            //    byteArray = Encoding.UTF8.GetBytes(data.SecretText);
  
-            }
-            //BinaryFormatter bf = new BinaryFormatter();
-            //MemoryStream ms = new MemoryStream();
-            //bf.Serialize(ms, data);
-            //ms.Seek(0, 0);
-            //StreamReader rdr = new StreamReader(ms);
-            //string str = rdr.ReadToEnd();
-            //byte[] byteArray = Encoding.ASCII.GetBytes(str);
+            //}
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, data);
+            ms.Seek(0, 0);
+            StreamReader rdr = new StreamReader(ms);
+            string str = rdr.ReadToEnd();
+            byte[] byteArray = Encoding.ASCII.GetBytes(str);
 
             return byteArray;
         }
 
         public static SecretData byteToSecretData(byte[] array)
         {
-            Console.WriteLine(array.Length);
-            String msg = Encoding.UTF8.GetString(array);
-            SecretData data = new SecretData();
-            data.SecretText = msg;
-            Console.WriteLine(msg);
+            //Console.WriteLine(array.Length);
+            //String msg = Encoding.UTF8.GetString(array);
+            //SecretData data = new SecretData();
+            //data.SecretText = msg;
+            //Console.WriteLine(msg);
 
-            //MemoryStream memStream = new MemoryStream(array);
-            //BinaryFormatter binForm = new BinaryFormatter();
-            ////memStream.Write(array, 0, array.Length);
-            //memStream.Seek(0, 0);
-            //SecretData data = (SecretData)binForm.Deserialize(memStream);
+            MemoryStream memStream = new MemoryStream(array);
+            BinaryFormatter binForm = new BinaryFormatter();
+            //memStream.Write(array, 0, array.Length);
+            memStream.Seek(0, 0);
+            SecretData data = (SecretData)binForm.Deserialize(memStream);
             return data;
         }
 

@@ -21,6 +21,7 @@ namespace fpjarmul
         int MAXFILESIZE = 0;
         TcpClient clientSocket;
         string msg;
+        SecretData data;
         public Form1()
         {
             InitializeComponent();
@@ -111,7 +112,7 @@ namespace fpjarmul
 
         private void btnCreateStegoText_Click(object sender, EventArgs e)
         {
-            SecretData data = new SecretData();
+            data = new SecretData();
             data.SecretText = richTextBox1.Text;
 
             byte[] secretByte = Converter.secretDataToByte(data);
@@ -127,7 +128,7 @@ namespace fpjarmul
 
         private void btnCreateStegoImage_Click(object sender, EventArgs e)
         {
-            SecretData data = new SecretData();
+            data = new SecretData();
             data.SecretImage = pictureBox2.Image;
 
             byte[] secretByte = Converter.secretDataToByte(data);
@@ -144,20 +145,20 @@ namespace fpjarmul
         private void btnSendImage_Click(object sender, EventArgs e)
         {
             BinaryFormatter bformatter = new BinaryFormatter();
-            PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
+            PacketData packetData = new PacketData(pictureBox3.Image, stegoLength, data);
 
-            //clientSocket = new TcpClient();
-            //Console.WriteLine("Client Started");
-            //clientSocket.Connect("10.151.43.68", 5118);
-            //NetworkStream serverStream = clientSocket.GetStream();
-            //bformatter.Serialize(serverStream, packetData);
-            //Console.WriteLine(pictureBox3.Image.Size);
-            SecretData data = new SecretData();
+            clientSocket = new TcpClient();
+            Console.WriteLine("Client Started");
+            clientSocket.Connect("10.151.43.68", 5118);
+            NetworkStream serverStream = clientSocket.GetStream();
+            bformatter.Serialize(serverStream, packetData);
+            Console.WriteLine(pictureBox3.Image.Size);
+            //SecretData data = new SecretData();
 
-            data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
+            //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
 
-            if (data.SecretText != null)
-                MessageBox.Show(data.SecretText);
+            //if (data.SecretText != null)
+            //    MessageBox.Show(data.SecretText);
 
 
 
