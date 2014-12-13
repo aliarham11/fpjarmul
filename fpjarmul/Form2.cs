@@ -29,7 +29,7 @@ namespace fpjarmul
         private void Form2_Load(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            ipaddress = IPAddress.Parse("10.151.43.68");
+            ipaddress = IPAddress.Parse("127.0.0.1");
             serverSocket = new TcpListener(ipaddress, 5118);
             clientSocket = default(TcpClient);
             

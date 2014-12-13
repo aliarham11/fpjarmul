@@ -146,18 +146,18 @@ namespace fpjarmul
             BinaryFormatter bformatter = new BinaryFormatter();
             PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
 
-            clientSocket = new TcpClient();
-            Console.WriteLine("Client Started");
-            clientSocket.Connect("10.151.43.68", 5118);
-            NetworkStream serverStream = clientSocket.GetStream();
-            bformatter.Serialize(serverStream, packetData);
-            Console.WriteLine(pictureBox3.Image.Size);
-            //SecretData data = new SecretData();
+            //clientSocket = new TcpClient();
+            //Console.WriteLine("Client Started");
+            //clientSocket.Connect("10.151.43.68", 5118);
+            //NetworkStream serverStream = clientSocket.GetStream();
+            //bformatter.Serialize(serverStream, packetData);
+            //Console.WriteLine(pictureBox3.Image.Size);
+            SecretData data = new SecretData();
 
-            //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
+            data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
 
-            //if (data.SecretText != null)
-            //    MessageBox.Show(data.SecretText);
+            if (data.SecretText != null)
+                MessageBox.Show(data.SecretText);
 
 
 
