@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace fpjarmul
 {
@@ -28,15 +29,13 @@ namespace fpjarmul
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            msg = "Assalamualaikum";
-            clientSocket = new TcpClient();
-            Console.WriteLine("Client Started");
-            clientSocket.Connect("10.151.40.235", 5118);
-            NetworkStream serverStream = clientSocket.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(msg);
-            serverStream.Write(outStream,0,outStream.Length);
-            serverStream.Flush();
-
+            //pictureBox3.Image = null;
+            //stegoLength = 18;
+            
+            //byte[] outStream = System.Text.Encoding.ASCII.GetBytes(msg);
+            //serverStream.Write(outStream, 0, outStream.Length);
+            //serverStream.Close();
+            //serverStream.Flush();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -144,12 +143,20 @@ namespace fpjarmul
 
         private void btnSendImage_Click(object sender, EventArgs e)
         {
+            BinaryFormatter bformatter = new BinaryFormatter();
             PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
+
+            clientSocket = new TcpClient();
+            Console.WriteLine("Client Started");
+            clientSocket.Connect("10.151.43.68", 5118);
+            NetworkStream serverStream = clientSocket.GetStream();
+            bformatter.Serialize(serverStream, packetData);
+            Console.WriteLine(pictureBox3.Image.Size);
             //SecretData data = new SecretData();
 
             //data = Steganography.ExtractSecretData(pictureBox3.Image, stegoLength);
 
-            //if (data.SecretText!=null)
+            //if (data.SecretText != null)
             //    MessageBox.Show(data.SecretText);
 
 
