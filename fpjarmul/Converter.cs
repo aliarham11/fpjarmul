@@ -32,19 +32,28 @@ namespace fpjarmul
                     pixelColor = inputImage.GetPixel(x, y);
 
                     if (int.Parse(pixelColor.R.ToString()) != 0)
-                        raw.Red.Add(int.Parse(pixelColor.R.ToString()));
+                        if (int.Parse(pixelColor.R.ToString()) == 255)
+                            raw.Red.Add(int.Parse(pixelColor.R.ToString()) - 2);
+                        else
+                            raw.Red.Add(int.Parse(pixelColor.R.ToString()));
                     else
-                        raw.Red.Add(1);
+                        raw.Red.Add(2);
 
                     if (int.Parse(pixelColor.G.ToString()) != 0)
-                        raw.Green.Add(int.Parse(pixelColor.G.ToString()));
+                        if(int.Parse(pixelColor.G.ToString())==255)
+                            raw.Green.Add(int.Parse(pixelColor.G.ToString())-2);
+                        else
+                            raw.Green.Add(int.Parse(pixelColor.G.ToString()));
                     else
-                        raw.Green.Add(1);
+                        raw.Green.Add(2);
 
                     if (int.Parse(pixelColor.B.ToString()) != 0)
-                        raw.Blue.Add(int.Parse(pixelColor.B.ToString()));
+                        if(int.Parse(pixelColor.B.ToString())==255)
+                            raw.Blue.Add(int.Parse(pixelColor.B.ToString())-2);
+                        else
+                            raw.Blue.Add(int.Parse(pixelColor.B.ToString()));
                     else
-                        raw.Blue.Add(1);
+                        raw.Blue.Add(2);
                 }
             }
 
