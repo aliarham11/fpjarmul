@@ -125,12 +125,13 @@ namespace fpjarmul
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Refresh();
             btnSendImage.Enabled = true;
+            MessageBox.Show("Stego Image Created");
         }
 
         private void btnCreateStegoImage_Click(object sender, EventArgs e)
         {
             //data = new SecretData();
-            data.SecretImage = pictureBox2.Image;
+            data.SecretImage = new Bitmap(pictureBox2.Image);
 
             byte[] secretByte = Converter.secretDataToByte(data);
             ElementRGB carrier = Converter.imageToElementRGB(pictureBox1.Image);
@@ -141,15 +142,14 @@ namespace fpjarmul
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.Refresh();
             btnSendImage.Enabled = true;
+            MessageBox.Show("Stego Image Created");
         }
 
         private void btnSendImage_Click(object sender, EventArgs e)
         {
             BinaryFormatter bformatter = new BinaryFormatter();
             PacketData packetData = new PacketData(pictureBox3.Image, stegoLength);
-            packetData.realImage = pictureBox1.Image;
-            packetData.secretImage = data.SecretImage;
-            packetData.secretText = data.SecretText;
+            packetData.setValue(pictureBox1.Image, pictureBox2.Image, data.SecretText);
 
             clientSocket = new TcpClient();
             Console.WriteLine("Client Started");
@@ -170,6 +170,7 @@ namespace fpjarmul
             //data yang dikirim berupa objek Image dan integer stegoLength
             //Image diperoleh dari pictureBox3.Image
             //stegoLength diperoleh dari variabel global class ini stegoLength
+            MessageBox.Show("Message Sent");
         }
 
        

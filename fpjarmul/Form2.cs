@@ -42,12 +42,14 @@ namespace fpjarmul
             pictureBox1.Image = incomingData.stegoImage;
             stegoLength = incomingData.stegoLength;
             SecretData data = new SecretData();
-            data = Steganography.ExtractSecretData(incomingData.stegoImage, incomingData.stegoLength);
 
             if (data.SecretText != null)
-                MessageBox.Show(data.SecretText);
+            {
+                data = Steganography.ExtractSecretData(incomingData.stegoImage, incomingData.stegoLength);
+                textBox1.Text = data.SecretText;
+            }
             else
-                pictureBox2.Image = data.SecretImage;
+                pictureBox2.Image = incomingData.secretImage;
 
             serverSocket.Stop();
         }

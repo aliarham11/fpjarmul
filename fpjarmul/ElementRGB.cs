@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace fpjarmul
 {
+    [Serializable]
     class ElementRGB
     {
         public List<int> Red { get; set; }

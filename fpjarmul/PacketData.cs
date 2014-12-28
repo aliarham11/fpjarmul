@@ -44,5 +44,12 @@ namespace fpjarmul
             info.AddValue("SecretImage", secretImage);
             info.AddValue("RealImage", realImage);
         }
+
+        public void setValue(Image img1, Image img2, String str)
+        {
+            realImage = img1;
+            secretImage = img2;
+            secretText = str;
+        }
     }
 }

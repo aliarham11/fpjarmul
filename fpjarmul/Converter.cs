@@ -112,6 +112,7 @@ namespace fpjarmul
             BinaryFormatter binForm = new BinaryFormatter();
             //memStream.Write(array, 0, array.Length);
             memStream.Seek(0, 0);
+            memStream.Position = 0;
             SecretData data = (SecretData)binForm.Deserialize(memStream);
             return data;
         }

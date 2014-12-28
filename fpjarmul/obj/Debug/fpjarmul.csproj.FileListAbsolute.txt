@@ -22,3 +22,10 @@ E:\[RESEARCH]\Road to Succes\Semester 7\Jaringan Multimedia\Final Project\fpjarm
 C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\bin\Debug\fpjarmul.exe.config
 C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.exe
 C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.pdb
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\bin\Debug\fpjarmul.exe
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\bin\Debug\fpjarmul.pdb
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.csprojResolveAssemblyReference.cache
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Form1.resources
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Form2.resources
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.Properties.Resources.resources
+C:\Users\AKFive\Source\Repos\fpjarmul\fpjarmul\obj\Debug\fpjarmul.csproj.GenerateResource.Cache
